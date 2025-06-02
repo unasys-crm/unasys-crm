@@ -1,17 +1,22 @@
-
+// backend/index.js
 const express = require('express');
-const app = express();
-const jwt = require('jsonwebtoken');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
+// Carrega variáveis do .env
+dotenv.config();
+
+const app = express();
+app.use(cors());
 app.use(express.json());
 
-app.post('/login', (req, res) => {
-  const { user, pass } = req.body;
-  if (user === 'admin' && pass === '123') {
-    const token = jwt.sign({ user }, 'secret', { expiresIn: '1h' });
-    return res.json({ token });
-  }
-  res.status(401).send('Unauthorized');
+// Rota de teste
+app.get('/', (req, res) => {
+  res.send('🚀 API do Unasys CRM funcionando!');
 });
 
-app.listen(3001, () => console.log('Backend rodando na porta 3001'));
+// Inicializa servidor na porta definida
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor rodando na porta ${PORT}`);
+});
