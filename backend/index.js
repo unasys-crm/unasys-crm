@@ -40,3 +40,27 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`✅ Servidor rodando na porta ${PORT}`);
 });
+
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // necessário para o Render
+});
+
+// Rota para salvar modelos de mensagens
+app.post('/modelos-mensagens', async (req, res) => {
+  const { grupo, status, mensagem } = req.body;
+
+  try {
+    await pool.query(
+      'INSERT INTO modelos_mensagens (grupo, status, mensagem) VALUES ($1, $2, $3)',
+      [grupo, status, mensagem]
+    );
+    res.status(201).json({ sucesso: true, mensagem: 'Modelo salvo com sucesso' });
+  } catch (error) {
+    console.error('Erro ao salvar modelo:', error);
+    res.status(500).json({ sucesso: false, erro: 'Erro ao salvar modelo' });
+  }
+});
+
