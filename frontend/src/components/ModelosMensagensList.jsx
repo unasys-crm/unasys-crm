@@ -10,7 +10,7 @@ const ModelosMensagensList = () => {
 
   const buscarModelos = async () => {
     try {
-      const res = await axios.get('https://<SEU_BACKEND_RENDER>/modelos-mensagens', {
+      const res = await axios.get('https://unasys-crm.onrender.com/modelos-mensagens', {
         params: {
           grupo,
           status,
