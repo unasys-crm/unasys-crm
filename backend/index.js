@@ -44,3 +44,15 @@ app.listen(PORT, () => {
   console.log(`✅ Servidor rodando na porta ${PORT}`);
 });
 
+// Rota para listar todos os modelos de mensagens
+app.get('/modelos-mensagens', async (req, res) => {
+  try {
+    const resultado = await pool.query('SELECT * FROM modelos_mensagens ORDER BY id DESC');
+    res.status(200).json(resultado.rows);
+  } catch (error) {
+    console.error('Erro ao buscar modelos:', error);
+    res.status(500).json({ sucesso: false, erro: 'Erro ao buscar modelos' });
+  }
+});
+
+
