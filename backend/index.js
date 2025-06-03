@@ -38,21 +38,40 @@ app.post('/modelos-mensagens', async (req, res) => {
   }
 });
 
-// Inicializa servidor na porta definida
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`✅ Servidor rodando na porta ${PORT}`);
-});
-
-// Rota para listar todos os modelos de mensagens
+// Rota para listar modelos de mensagens com filtros e paginação
 app.get('/modelos-mensagens', async (req, res) => {
+  const { grupo, status, pagina = 1, limite = 10 } = req.query;
+  const offset = (pagina - 1) * limite;
+
   try {
-    const resultado = await pool.query('SELECT * FROM modelos_mensagens ORDER BY id DESC');
-    res.status(200).json(resultado.rows);
+    const condicoes = [];
+    const valores = [];
+
+    if (grupo) {
+      valores.push(`%${grupo}%`);
+      condicoes.push(`grupo ILIKE $${valores.length}`);
+    }
+    if (status) {
+      valores.push(status);
+      condicoes.push(`status = $${valores.length}`);
+    }
+
+    const where = condicoes.length ? `WHERE ${condicoes.join(' AND ')}` : '';
+    const query = `SELECT * FROM modelos_mensagens ${where} ORDER BY id DESC LIMIT $${valores.length + 1} OFFSET $${valores.length + 2}`;
+    valores.push(limite, offset);
+
+    const resultado = await pool.query(query, valores);
+    res.json(resultado.rows);
   } catch (error) {
     console.error('Erro ao buscar modelos:', error);
     res.status(500).json({ sucesso: false, erro: 'Erro ao buscar modelos' });
   }
+});
+
+// Inicializa servidor na porta definida
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor rodando na porta ${PORT}`);
 });
 
 
