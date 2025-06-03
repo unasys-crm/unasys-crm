@@ -11,3 +11,6 @@ function App() {
 }
 
 export default App;
+import ModelosMensagens from './pages/ModelosMensagens';
+
+<Route path="/modelos" element={<ModelosMensagens />} />
