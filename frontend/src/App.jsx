@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from "react";
 import AppRoutes from "./AppRoutes";
 
@@ -6,4 +7,3 @@ function App() {
 }
 
 export default App;
-
