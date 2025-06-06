@@ -1,13 +1,9 @@
-// src/App.jsx
-import React from 'react';
-import ModelosMensagensList from './components/ModelosMensagensList';
+import React from "react";
+import AppRoutes from "./AppRoutes";
 
 function App() {
-  return (
-    <div className="min-h-screen bg-white p-6">
-      <ModelosMensagensList />
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
+
