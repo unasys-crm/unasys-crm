@@ -1,46 +1,36 @@
 // src/pages/Login.jsx
-import React, { useState } from "react";
+import React from "react";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log("Login:", { email, senha });
-    // Aqui futuramente vai o fetch para autenticar no backend
-  };
-
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white shadow-md rounded p-8 w-full max-w-sm space-y-4"
-      >
-        <h1 className="text-xl font-bold text-center">Unasys CRM - Login</h1>
-        <input
-          type="email"
-          placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Entrar
-        </button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-sm">
+        <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+        <form>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">E-mail</label>
+            <input
+              type="email"
+              placeholder="Digite seu e-mail"
+              className="w-full px-3 py-2 border rounded"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+            <input
+              type="password"
+              placeholder="Digite sua senha"
+              className="w-full px-3 py-2 border rounded"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
