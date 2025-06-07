@@ -1,15 +1,17 @@
-// frontend/src/pages/Login.jsx
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UsuarioContext } from "@/context/UsuarioContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const navigate = useNavigate();
+  const { setUsuario } = useContext(UsuarioContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErro("");
 
     try {
       const res = await fetch("/api/login", {
@@ -24,13 +26,9 @@ export default function Login() {
       }
 
       const usuario = await res.json();
-
-      // Armazena o token separadamente e os dados do usuário
-      localStorage.setItem("token", usuario.token);
-      localStorage.setItem("usuario", JSON.stringify(usuario.dados));
-
-      // Redireciona para a home protegida
-      navigate("/");
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      setUsuario(usuario); // Atualiza contexto
+      navigate("/"); // Redireciona para a rota protegida
     } catch (err) {
       console.error(err);
       setErro("Erro ao tentar logar. Tente novamente.");
@@ -71,3 +69,4 @@ export default function Login() {
     </div>
   );
 }
+
