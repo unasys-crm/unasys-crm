@@ -1,4 +1,3 @@
-// frontend/src/pages/Login.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -66,3 +65,4 @@ export default function Login() {
     </div>
   );
 }
+
