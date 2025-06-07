@@ -1,3 +1,4 @@
+// frontend/src/pages/Login.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +15,7 @@ export default function Login() {
       const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, senha })
+        body: JSON.stringify({ email, senha }),
       });
 
       if (!res.ok) {
@@ -23,8 +24,13 @@ export default function Login() {
       }
 
       const usuario = await res.json();
-      localStorage.setItem("usuario", JSON.stringify(usuario));
-      navigate("/dashboard");
+
+      // Armazena o token separadamente e os dados do usuário
+      localStorage.setItem("token", usuario.token);
+      localStorage.setItem("usuario", JSON.stringify(usuario.dados));
+
+      // Redireciona para a home protegida
+      navigate("/");
     } catch (err) {
       console.error(err);
       setErro("Erro ao tentar logar. Tente novamente.");
@@ -65,4 +71,3 @@ export default function Login() {
     </div>
   );
 }
-
