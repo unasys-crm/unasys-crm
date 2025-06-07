@@ -1,13 +1,23 @@
 // frontend/src/pages/ModelosMensagens.jsx
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ModelosMensagens() {
+  const navigate = useNavigate();
   const [modelos, setModelos] = useState([]);
   const [grupo, setGrupo] = useState('');
   const [status, setStatus] = useState('');
   const [pagina, setPagina] = useState(1);
-  const [limite, setLimite] = useState(10);
+  const [limite] = useState(10); // constante fixa
+
+  // Verifica se o usuário está logado
+  useEffect(() => {
+    const usuario = localStorage.getItem("usuario");
+    if (!usuario) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const carregarModelos = async () => {
     try {
@@ -22,7 +32,7 @@ function ModelosMensagens() {
 
   useEffect(() => {
     carregarModelos();
-  }, [grupo, status, pagina, limite]);
+  }, [grupo, status, pagina]);
 
   return (
     <div className="p-4">
@@ -68,9 +78,20 @@ function ModelosMensagens() {
       </table>
 
       <div className="flex justify-between mt-4">
-        <button disabled={pagina <= 1} onClick={() => setPagina(p => p - 1)} className="px-4 py-1 bg-gray-300 rounded">Anterior</button>
+        <button
+          disabled={pagina <= 1}
+          onClick={() => setPagina(p => p - 1)}
+          className="px-4 py-1 bg-gray-300 rounded disabled:opacity-50"
+        >
+          Anterior
+        </button>
         <span>Página {pagina}</span>
-        <button onClick={() => setPagina(p => p + 1)} className="px-4 py-1 bg-gray-300 rounded">Próxima</button>
+        <button
+          onClick={() => setPagina(p => p + 1)}
+          className="px-4 py-1 bg-gray-300 rounded"
+        >
+          Próxima
+        </button>
       </div>
     </div>
   );
