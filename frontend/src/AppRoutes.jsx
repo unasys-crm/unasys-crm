@@ -19,16 +19,26 @@ export default function AppRoutes() {
           }
         />
         <Route
-          path="/"
-          element={
-            <RotaPrivada>
-              <div className="p-4 text-xl font-semibold">Dashboard Inicial</div>
-            </RotaPrivada>
-          }
-        />
+  path="/"
+  element={
+    <RotaPrivada>
+      <Navigate to="/modelos" />
+    </RotaPrivada>
+  }
+/>
         {/* Redireciona qualquer rota desconhecida para o login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
+
+<Route
+  path="/"
+  element={
+    <RotaPrivada>
+      <Navigate to="/modelos" />
+    </RotaPrivada>
+  }
+/>
