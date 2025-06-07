@@ -1,6 +1,6 @@
 // src/AppRoutes.jsx
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import ModelosMensagens from "./pages/ModelosMensagens";
 import RotaPrivada from "./components/RotaPrivada";
@@ -18,15 +18,16 @@ export default function AppRoutes() {
             </RotaPrivada>
           }
         />
-        {/* Outras rotas aqui */}
         <Route
           path="/"
           element={
             <RotaPrivada>
-              <div>Dashboard Inicial</div>
+              <div className="p-4 text-xl font-semibold">Dashboard Inicial</div>
             </RotaPrivada>
           }
         />
+        {/* Redireciona qualquer rota desconhecida para o login */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
