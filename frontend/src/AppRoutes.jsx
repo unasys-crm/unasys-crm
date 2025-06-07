@@ -1,3 +1,4 @@
+// frontend/src/AppRoutes.jsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import ModelosMensagens from "./pages/ModelosMensagens";
@@ -20,6 +21,7 @@ export default function AppRoutes() {
           }
         />
 
+        {/* Rota padrão: se logado, vai para /modelos; senão, /login */}
         <Route
           path="/"
           element={

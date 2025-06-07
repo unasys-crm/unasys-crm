@@ -1,3 +1,4 @@
+// frontend/src/components/RotaPrivada.jsx
 import { Navigate } from "react-router-dom";
 
 export default function RotaPrivada({ children }) {
